@@ -4,7 +4,8 @@ import { Link } from '@inertiajs/react';
 export default function Dashboard() {
     return (
         <div>
-            <h1>Bem-vindo ao Dashboard!</h1>
+            <h1>Bem-vindo ao Dashboard do Instrutor!
+            </h1>
             
             {/* Use o componente Link com method="post" */}
             <Link 

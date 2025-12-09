@@ -14,7 +14,12 @@ class UsersController extends Controller
     public function index()
     {
        if (Auth::check()) {
-            return Inertia::render('Dashboard');
+          $userInfos = Auth::user();
+          if ($userInfos->cargo === 'instrutor') {
+               return Inertia::render('DashboardInstructor');
+
+          }
+               return Inertia::render('DashboardClient');
        }else{
             return redirect('/login');
        }

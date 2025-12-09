@@ -1,3 +1,4 @@
+import CargoSelector from '@/Components/CargoSelector';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -6,11 +7,13 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Register() {
+    const optionsDeCargo = ['instrutor', 'cliente'];
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
         password: '',
         password_confirmation: '',
+        cargo: '',
     });
 
     const submit = (e) => {
@@ -59,6 +62,24 @@ export default function Register() {
 
                     <InputError message={errors.email} className="mt-2" />
                 </div>
+
+            <div className="mt-4">
+                <InputLabel htmlFor="Cargo" value="Cargo" />
+
+                <CargoSelector // 2. Use o novo nome do componente
+                    id="cargo"
+                    name="cargo"
+                    value={data.cargo}
+                    className="mt-1 block w-full"
+                    autoComplete="cargo"
+                    options={optionsDeCargo}
+                    // O onChange é o mesmo, a função de itemclique no componente cuida de simular o evento
+                    onChange={(e) => setData('cargo', e.target.value)} 
+                    required
+                />
+
+                <InputError message={errors.cargo} className="mt-2" />
+            </div>
 
                 <div className="mt-4">
                     <InputLabel htmlFor="password" value="Password" />
