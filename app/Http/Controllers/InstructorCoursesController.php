@@ -43,6 +43,7 @@ class InstructorCoursesController extends Controller
         //validação
         $validate = $this->service->validateCourse($req);
         //uploadImage
+        $validate['cover_url'] = $this->service->uploadImage($validate['cover_url']);
 
         Courses::create($validate);
 

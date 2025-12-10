@@ -2,6 +2,8 @@
 namespace App\Services;
 use App\Models\Courses;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class InstructorCoursesService{
 
@@ -34,15 +36,20 @@ public function getCourses()
 
     }
 
-    public function uploadImage($req){
-        if ($req->hasFile('cover_image')) {
-            // Salva a imagem na pasta 'public/covers' e retorna o caminho (ex: covers/nome-aleatorio.jpg)
-            $path = $req->file('cover_image')->store('covers', 'public');
-            
-            // Salva o caminho público no banco de dados
-            $itemData['cover_url'] = $path; 
+public function uploadImage(UploadedFile $uploadedFile): string
+{
+    $temporaryPath = $uploadedFile->store('temp', 'local'); 
+    $fileName = $uploadedFile->getClientOriginalName();
+    $newPath = 'covers/' . $fileName;
+    $fullTemporaryPath = 'temp/' . basename($temporaryPath);
+    Storage::disk('public')->put(
+        $newPath, 
+        Storage::disk('local')->get($fullTemporaryPath)
+    );
+    Storage::disk('local')->delete($fullTemporaryPath);
+    return Storage::url($newPath);
+}
 
-            return $itemData['cover_url'];
-        }
-    }
+
+
 }
