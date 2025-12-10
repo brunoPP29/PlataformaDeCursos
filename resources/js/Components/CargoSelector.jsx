@@ -38,9 +38,6 @@ const SimpleCargoSelector = ({
 
     // Função de clique do item
     const handleItemClick = (optionValue) => {
-        // 🚨 DEBUG: Veja se este log aparece no console!
-
-        // Simula o evento de mudança (obrigatório para o useForm do Inertia)
         onChange({ target: { value: optionValue, name: name } });
         setOpen(false);
     };

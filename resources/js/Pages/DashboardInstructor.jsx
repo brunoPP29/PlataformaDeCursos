@@ -16,6 +16,14 @@ export default function Dashboard() {
             >
                 Sair
             </Link>
+            <Link 
+                href={route('manageCourses')} // Use a função route() se estiver disponível (recomendado)
+                method="get" 
+                as="button" // Renderiza como um botão HTML
+                type="button" 
+            >
+                Manage Courses
+            </Link>
         </div>
     );
 }

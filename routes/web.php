@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\InstructorCoursesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
@@ -33,5 +34,15 @@ Route::post('/logout', Logout::class)
 
 Route::get('', [UsersController::class, 'index'])
     ->name('dashboard');
+
+Route::get('/manageCourses', [InstructorCoursesController::class, 'index'])
+    ->name('manageCourses');
+
+Route::get('/createCourse', [InstructorCoursesController::class, 'create'])
+    ->name('createCourse');
+
+Route::post('/registerCourse', [InstructorCoursesController::class, 'register'])
+    ->name('registerCourse');
+
 
 require __DIR__.'/auth.php';
