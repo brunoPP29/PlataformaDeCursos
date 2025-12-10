@@ -66,9 +66,6 @@ export default function CourseCard({ course }) {
                     <button className="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                         Gerenciar
                     </button>
-                    <button className="px-4 py-2 text-sm font-semibold border border-red-400 text-red-600 rounded-lg hover:bg-red-50 transition">
-                        Excluir
-                    </button>
                 </div>
             </div>
         </div>

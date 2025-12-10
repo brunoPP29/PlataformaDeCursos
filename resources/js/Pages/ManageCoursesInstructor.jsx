@@ -39,9 +39,6 @@ export default function ManageCoursesInstructor({courses}) {
                         <p className="text-xl text-gray-500">
                             😔 Você ainda não tem cursos cadastrados.
                         </p>
-                        <button className="mt-4 px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition">
-                            Criar Novo Curso
-                        </button>
                     </div>
                 )}
             

@@ -47,7 +47,7 @@ class InstructorCoursesController extends Controller
 
         Courses::create($validate);
 
-        return redirect('/');
+        return redirect('/manageProducts');
 
 
 
