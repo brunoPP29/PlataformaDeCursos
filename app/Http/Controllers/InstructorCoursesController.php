@@ -19,20 +19,21 @@ class InstructorCoursesController extends Controller
 
 
     public function index(){
-        if (Auth::check()) {
-            $infos = Auth::user();
-            $courses = $this->service->getCourses($infos);
-            //tem que passar os parametros para visualizar os cursos de fato depois
-            return Inertia::render('ManageCoursesInstructor', [
-                'courses' => $courses,
-            ]);
+        if ($this->service->checkAuth()) {
+                $infos = Auth::user();
+                $courses = $this->service->getCourses($infos);
+                //tem que passar os parametros para visualizar os cursos de fato depois
+                return Inertia::render('ManageCoursesInstructor', [
+                    'courses' => $courses,
+                ]);
         }else{
             return redirect('/login');
         }
+       
     }
 
     public function create(){
-        if (Auth::check()) {
+        if ($this->service->checkAuth()) {
             return Inertia::render('CreateCoursesInstructor');
         }else{
             return redirect('/login');
@@ -41,16 +42,62 @@ class InstructorCoursesController extends Controller
 
     public function register(Request $req){
         //validação
-        $validate = $this->service->validateCourse($req);
-        //uploadImage
-        $validate['cover_url'] = $this->service->uploadImage($validate['cover_url']);
+        if ($this->service->checkAuth()) {
+                $validate = $this->service->validateCourse($req);
+                //uploadImage
+                $validate['cover_url'] = $this->service->uploadImage($validate['cover_url']);
+                //criar
+                Courses::create($validate);
 
-        Courses::create($validate);
+                return redirect('/manageProducts');
+        }else{
+            return redirect('/login');
+        }
 
-        return redirect('/manageProducts');
+    }
 
+    public function manageSingleCourse(Request $req){
+        if ($this->service->checkAuth()) {
+            $course = $this->service->getCourse($req->id);
+            
+            return Inertia::render('SingleCourseInstructor', [
+                'course' => $course
+            ]);
+        }else{
+            return redirect('/login');
+        }
+    }
 
+    public function handleActionInstructor(Request $req){
+        if ($this->service->checkAuth()) {
+            if ($this->service->getCourse($req->id)) {
+                $idCourse = $req->id;
+                $action = $req->action;
+                $indexAnterior = $this->service->getIndex($idCourse);
+            //validar as actions e definir a action
+            if($this->service->handleAction($action)){
+                return Inertia::render($action, [
+                    'idCourse' => $idCourse,
+                    'indexAnterior' => $indexAnterior
+                ]);
+            }else{
+                return back();
+            }
+            }else{
+                return back();
+            }
+        }else{
+            return redirect('/login');
+        }
+    }
 
-        
+    public function registerModule(Request $req){
+        if ($this->service->checkAuth()) {
+                $validate = $this->service->validateModule($req);
+                
+
+        }else{
+            return redirect('/login');
+        }
     }
 }

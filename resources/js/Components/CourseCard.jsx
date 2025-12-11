@@ -63,9 +63,11 @@ export default function CourseCard({ course }) {
 
                 {/* 4. BOTÕES DE AÇÃO */}
                 <div className="mt-6 flex justify-end space-x-3 border-t pt-4 border-gray-100">
-                    <button className="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    <a
+                    href={`/manageCourses/${course.id}`}
+                    className="px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                         Gerenciar
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

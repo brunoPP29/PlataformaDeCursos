@@ -38,11 +38,23 @@ Route::get('', [UsersController::class, 'index'])
 Route::get('/manageCourses', [InstructorCoursesController::class, 'index'])
     ->name('manageCourses');
 
+Route::get('/manageCourses/{id}', [InstructorCoursesController::class, 'manageSingleCourse'])
+    ->name('manageSingleCourse');
+
+Route::get('/manageCourses/{id}/{action}', [InstructorCoursesController::class, 'handleActionInstructor'])
+    ->name('handleActionInstructor');
+
 Route::get('/createCourse', [InstructorCoursesController::class, 'create'])
     ->name('createCourse');
 
+
+
+    ///registers
 Route::post('/registerCourse', [InstructorCoursesController::class, 'register'])
     ->name('registerCourse');
+
+Route::post('/registerModule', [InstructorCoursesController::class, 'registerModule'])
+    ->name('registerModule');
 
 
 require __DIR__.'/auth.php';
