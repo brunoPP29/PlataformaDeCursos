@@ -7,15 +7,20 @@ import { Head, useForm } from '@inertiajs/react';
 
 export default function CreateModule({ idCourse , indexAnterior}) {
     
-    const statusOptions = ['draft', 'published'];
+    // ALTERAÇÃO AQUI: statusOptions agora usa objetos para mapear label e valor numérico
+    const statusOptions = [
+        { label: 'Draft', value: 0 },
+        { label: 'Published', value: 1 },
+    ];
 
     const { data, setData, post, processing, errors, reset } = useForm({
         course_id: idCourse,
         title: '',
-        index: indexAnterior+1,
-        status: statusOptions[0],
+        order_index: indexAnterior + 1,
+        // Define o valor inicial como o valor do primeiro item (0)
+        status: statusOptions[0].value, 
     });
-
+    
     const submit = (e) => {
         e.preventDefault();
 
@@ -30,10 +35,11 @@ export default function CreateModule({ idCourse , indexAnterior}) {
 
             <form onSubmit={submit}>
             {/*forms hidden para passar*/ }
-                <input type="hidden" name='order_index' value={data.index}/>
+                <input type="hidden" name='order_index' value={data.order_index} />
                 <input type="hidden" name='course_id' value={data.course_id} />
                 {/* TÍTULO (title) */}
                 <div>
+                
                     <InputLabel htmlFor="title" value="Título do Módulo" />
                     <TextInput
                         id="title"
@@ -59,12 +65,14 @@ export default function CreateModule({ idCourse , indexAnterior}) {
                         name="status"
                         value={data.status}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        onChange={(e) => setData('status', e.target.value)}
+                        // O valor é convertido para inteiro no onChange, pois o HTML retorna string
+                        onChange={(e) => setData('status', parseInt(e.target.value))} 
                         required
                     >
-                        {statusOptions.map((status) => (
-                            <option key={status} value={status}>
-                                {status.charAt(0).toUpperCase() + status.slice(1)}
+                        {/* ALTERAÇÃO AQUI: Mapeia o array de objetos */}
+                        {statusOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
                             </option>
                         ))}
                     </select>

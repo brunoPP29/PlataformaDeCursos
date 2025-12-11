@@ -80,27 +80,29 @@ public function handleAction($action){
 
 public function getIndex($idCourse){
     return Modules::where('course_id', $idCourse)
-                    ->select('order_index')
-                    ->get();
+                    ->max('order_index');
 }
 
 public function validateModule($req)
 {
-    $allowedStatuses = ['draft', 'published'];
+    $allowedStatuses = [0,1];
 
     $validatedData = $req->validate([
         'title'     => ['required', 'string', 'max:255'],
-        'course_id' => ['required', 'integer', 'exists:courses,id'],
-        'status'    => ['required', 'string', Rule::in($allowedStatuses)],
+        'course_id' => ['required', 'integer'],
+        'order_index' => ['required', 'integer'],
+        'status'    => ['required', 'integer', Rule::in($allowedStatuses)],
     ]);
 
     $moduleData = [
         'title'     => $validatedData['title'],
         'course_id' => $validatedData['course_id'],
         'status'    => $validatedData['status'],
+        'order_index' =>$validatedData['order_index'],
     ];
     return $moduleData;
 }
+
 
 
 

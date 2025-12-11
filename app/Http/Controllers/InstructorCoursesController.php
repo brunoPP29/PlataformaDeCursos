@@ -6,6 +6,8 @@ use App\Services\InstructorCoursesService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Courses;
+use App\Models\Modules;
+
 
 class InstructorCoursesController extends Controller
 {
@@ -94,8 +96,9 @@ class InstructorCoursesController extends Controller
     public function registerModule(Request $req){
         if ($this->service->checkAuth()) {
                 $validate = $this->service->validateModule($req);
+                Modules::create($validate);
+                            return redirect('/manageModules'.$req->course_id);
                 
-
         }else{
             return redirect('/login');
         }
