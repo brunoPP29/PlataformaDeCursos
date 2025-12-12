@@ -81,8 +81,18 @@ public function handleAction($action, $idCourse){
             $course->delete();
     
         return redirect('manageCourses');
-    
-        }else{
+
+
+    }elseif($action === 'status'){
+        $status = Courses::where('id', $idCourse)
+                ->select('status')
+                ->first();
+        $statusInteger = $status->status;
+        $statusInteger = !$statusInteger;
+        Courses::where('id', $idCourse)
+                ->update(['status' => $statusInteger]);
+        return redirect('manageCourses');
+    }else{
         return false;
     }
 }

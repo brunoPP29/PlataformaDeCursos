@@ -100,7 +100,7 @@ export default function CourseDetailsCard({ course }) {
                     
                     {/* Botão de Publicar / Desativar (Dinâmico) */}
                     <a 
-                        
+                        href={`/manageCourses/${course.id}/status`}
                         className={`
                             px-6 py-3 text-lg font-bold text-white rounded-lg transition shadow-md
                             ${statusDetails.actionButtonClass}
@@ -109,12 +109,6 @@ export default function CourseDetailsCard({ course }) {
                         {statusDetails.actionButtonText}
                     </a>
 
-                    <a
-                    className="px-6 py-3 text-lg font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md"
-                    href={`/manageCourses/${course.id}/moduleAdd`}
-                    >
-                    Criar Modulo
-                    </a>
 
                     <a
                     href={`/manageModules/${course.id}`}
