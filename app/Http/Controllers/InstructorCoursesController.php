@@ -51,7 +51,7 @@ class InstructorCoursesController extends Controller
                 //criar
                 Courses::create($validate);
 
-                return redirect('/manageProducts');
+                return redirect('manageCourses');
         }else{
             return redirect('/login');
         }
@@ -77,11 +77,19 @@ class InstructorCoursesController extends Controller
                 $action = $req->action;
                 $indexAnterior = $this->service->getIndex($idCourse);
             //validar as actions e definir a action
-            if($this->service->handleAction($action)){
-                return Inertia::render($action, [
-                    'idCourse' => $idCourse,
-                    'indexAnterior' => $indexAnterior
-                ]);
+            $handleAction = $this->service->handleAction($action, $idCourse);
+            if($handleAction){
+
+                if (is_string($handleAction)) {
+                    return Inertia::render($action, [
+                        'idCourse' => $idCourse,
+                        'indexAnterior' => $indexAnterior
+                    ]);
+                }else{
+                    return $handleAction;
+                }
+
+
             }else{
                 return back();
             }
@@ -97,7 +105,7 @@ class InstructorCoursesController extends Controller
         if ($this->service->checkAuth()) {
                 $validate = $this->service->validateModule($req);
                 Modules::create($validate);
-                            return redirect('/manageModules'.$req->course_id);
+                return redirect('/manageModules/'.$req->course_id);
                 
         }else{
             return redirect('/login');

@@ -99,14 +99,15 @@ export default function CourseDetailsCard({ course }) {
                 <div className="mt-8 pt-6 border-t border-gray-100 flex justify-end space-x-4">
                     
                     {/* Botão de Publicar / Desativar (Dinâmico) */}
-                    <button 
+                    <a 
+                        
                         className={`
                             px-6 py-3 text-lg font-bold text-white rounded-lg transition shadow-md
                             ${statusDetails.actionButtonClass}
                         `}
                     >
                         {statusDetails.actionButtonText}
-                    </button>
+                    </a>
 
                     <a
                     className="px-6 py-3 text-lg font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md"
@@ -116,10 +117,9 @@ export default function CourseDetailsCard({ course }) {
                     </a>
 
                     <a
-                    className="px-6 py-3 text-lg font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md"
-                    href={`/manageCourses/${course.id}/lessonAdd`}
-                    >
-                    Adicionar aula
+                    href={`/manageModules/${course.id}`}
+                    className="px-6 py-3 text-lg font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md">
+                        Gerenciar Modulos
                     </a>
 
                     {/* Botão de Edição */}
@@ -127,18 +127,14 @@ export default function CourseDetailsCard({ course }) {
                         Editar Curso
                     </button>
 
-                    <button className="px-6 py-3 text-lg font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md">
-                        Gerenciar Modulos
-                    </button>
 
-                    <button className="px-6 py-3 text-lg font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md">
-                        Gerenciar Aulas
-                    </button>
 
                     {/* Botão de Excluir */}
-                    <button className="px-6 py-3 text-lg font-bold border border-red-400 text-red-600 rounded-lg hover:bg-red-50 transition">
+                    <a
+                    href={`/manageCourses/${course.id}/courseDelete`}
+                    className="px-6 py-3 text-lg font-bold border border-red-400 text-red-600 rounded-lg hover:bg-red-50 transition">
                         Excluir
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

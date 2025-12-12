@@ -5,8 +5,7 @@ use App\Http\Controllers\InstructorCoursesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
-
- 
+use App\Http\Controllers\InstructorModulesController;
 
 // Login routes
 
@@ -43,6 +42,10 @@ Route::get('/manageCourses/{id}', [InstructorCoursesController::class, 'manageSi
 
 Route::get('/manageCourses/{id}/{action}', [InstructorCoursesController::class, 'handleActionInstructor'])
     ->name('handleActionInstructor');
+
+Route::get('/manageModules/{id}', [InstructorModulesController::class, 'index'])
+    ->name('manageModules');
+
 
 Route::get('/createCourse', [InstructorCoursesController::class, 'create'])
     ->name('createCourse');

@@ -28,7 +28,7 @@ public function getCourses()
             'description'   => ['required', 'string'],
             'category'      => ['required', 'string', 'max:255'],
             'price'         => ['required', 'numeric', 'min:0'],
-            'cover_url'     => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // Regras para a imagem
+            'cover_url'     => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // Regras para a imagem
         ]);
 
         // Inicializa o array de dados para o modelo
@@ -65,15 +65,24 @@ public function getCourse($id){
     return Courses::findOrFail($id);
 }
 
-public function handleAction($action){
+public function handleAction($action, $idCourse){
     if ($action === 'edit') {
         //RETORNAR EDIT
         ///lidar com edit
     }elseif ($action === 'moduleAdd') {
         return $action;
+
     }elseif ($action === 'lessonAdd'){
         return $action;
-    }else{
+
+    }elseif($action === 'courseDelete'){
+
+        $course = Courses::findOrFail($idCourse);
+            $course->delete();
+    
+        return redirect('manageCourses');
+    
+        }else{
         return false;
     }
 }
