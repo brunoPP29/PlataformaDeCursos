@@ -117,9 +117,11 @@ export default function CourseDetailsCard({ course }) {
                     </a>
 
                     {/* Botão de Edição */}
-                    <button className="px-6 py-3 text-lg font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md">
+                    <a
+                    href={`/manageCourses/${course.id}/editCourse`}
+                    className="px-6 py-3 text-lg font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md">
                         Editar Curso
-                    </button>
+                    </a>
 
 
 

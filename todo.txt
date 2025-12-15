@@ -1,0 +1,15 @@
+TO DO LIST
+
+1-editar curso
+
+1-gerenciador de modulos
+    -editar
+    -adicionar aulas
+    -visualizar aulas
+    -ordenação dos modulos
+2-editar curso
+
+3- depois que fizer tudo acima
+4- gerenciar aulas, editar aulas,deletar aulas, ordenação de aulas em modulos
+
+5-fazer um 404 na /404

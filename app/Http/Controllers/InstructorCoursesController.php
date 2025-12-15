@@ -46,7 +46,7 @@ class InstructorCoursesController extends Controller
         //validação
         if ($this->service->checkAuth()) {
                 $validate = $this->service->validateCourse($req);
-                //uploadImage
+                //uploadImaged
                 $validate['cover_url'] = $this->service->uploadImage($validate['cover_url']);
                 //criar
                 Courses::create($validate);
@@ -72,22 +72,22 @@ class InstructorCoursesController extends Controller
 
     public function handleActionInstructor(Request $req){
         if ($this->service->checkAuth()) {
-            if ($this->service->getCourse($req->id)) {
-                $idCourse = $req->id;
+            $course = $this->service->getCourse($req->id);
+            if ($course) {
+                $idCourse = $course->id;
                 $action = $req->action;
                 $indexAnterior = $this->service->getIndex($idCourse);
-            //validar as actions e definir a action
-            $handleAction = $this->service->handleAction($action, $idCourse);
-            if($handleAction){
-
-                if (is_string($handleAction)) {
-                    return Inertia::render($action, [
-                        'idCourse' => $idCourse,
-                        'indexAnterior' => $indexAnterior
-                    ]);
-                }else{
-                    return $handleAction;
-                }
+                //validar as actions e definir a action
+                $handleAction = $this->service->handleAction($action, $idCourse);
+                if($handleAction){
+                    if (is_string($handleAction)) {
+                        return Inertia::render($action, [
+                            'indexAnterior' => $indexAnterior,
+                            'course' => $course
+                        ]);
+                    }else{
+                        return $handleAction;
+                    }
 
 
             }else{
@@ -107,6 +107,21 @@ class InstructorCoursesController extends Controller
                 Modules::create($validate);
                 return redirect('/manageModules/'.$req->course_id);
                 
+        }else{
+            return redirect('/login');
+        }
+    }
+
+    public function editCourse(Request $req){
+        if ($this->service->checkAuth()) {
+            $validate = $this->service->validateEdit($req);
+            if ($validate){
+                $validate['cover_url'] = $this->service->uploadImage($validate['cover_url']);
+                $this->service->updateEdit($validate, $req->id);
+                return redirect('/manageCourses');
+            }else{
+                return redirect('/404');
+            }
         }else{
             return redirect('/login');
         }

@@ -59,5 +59,9 @@ Route::post('/registerCourse', [InstructorCoursesController::class, 'register'])
 Route::post('/registerModule', [InstructorCoursesController::class, 'registerModule'])
     ->name('registerModule');
 
+//edit
+Route::patch('/editCourse', [InstructorCoursesController::class, 'editCourse'])
+    ->name('editCourse');
+
 
 require __DIR__.'/auth.php';

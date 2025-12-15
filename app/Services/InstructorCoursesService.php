@@ -66,9 +66,11 @@ public function getCourse($id){
 }
 
 public function handleAction($action, $idCourse){
+    $course = Courses::where('id', $idCourse)
+                ->first();
+    //actions
     if ($action === 'edit') {
-        //RETORNAR EDIT
-        ///lidar com edit
+        return $action;
     }elseif ($action === 'moduleAdd') {
         return $action;
 
@@ -81,17 +83,16 @@ public function handleAction($action, $idCourse){
             $course->delete();
     
         return redirect('manageCourses');
-
-
+        
+    }elseif($action === 'editCourse'){              
+        return $action;
     }elseif($action === 'status'){
-        $status = Courses::where('id', $idCourse)
-                ->select('status')
-                ->first();
-        $statusInteger = $status->status;
-        $statusInteger = !$statusInteger;
+        $status = $course->status;
+        $statusInteger = !$status;
         Courses::where('id', $idCourse)
                 ->update(['status' => $statusInteger]);
         return redirect('manageCourses');
+
     }else{
         return false;
     }
@@ -117,9 +118,37 @@ public function validateModule($req)
         'title'     => $validatedData['title'],
         'course_id' => $validatedData['course_id'],
         'status'    => $validatedData['status'],
-        'order_index' =>$validatedData['order_index'],
+        'order_index' => $validatedData['order_index'],
     ];
     return $moduleData;
+}
+
+public function validateEdit($req){
+    if (Courses::where('id', $req->id)) {
+
+        $validatedData = $req->validate([
+            'title' => 'required|string|max:255', 
+            'description' => 'nullable|string', 
+            'price' => 'required|numeric|min:0', 
+            'cover_url' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        ]);
+
+        return $itemData = [
+            'title'         => $validatedData['title'],
+            'description'   => $validatedData['description'],
+            'price'         => $validatedData['price'],
+            'cover_url'     => $validatedData['cover_url'],        
+        ];
+    }else{
+        return redirect('/404');
+    }
+
+
+}
+
+public function updateEdit($validatedData, $id){
+    Courses::where('id', $id)
+            ->update($validatedData);
 }
 
 

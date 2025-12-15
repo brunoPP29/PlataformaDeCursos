@@ -5,7 +5,7 @@ import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout'; 
 import { Head, useForm } from '@inertiajs/react';
 
-export default function CreateModule({ idCourse , indexAnterior}) {
+export default function CreateModule({indexAnterior, course}) {
     
     // ALTERAÇÃO AQUI: statusOptions agora usa objetos para mapear label e valor numérico
     const statusOptions = [
@@ -14,7 +14,7 @@ export default function CreateModule({ idCourse , indexAnterior}) {
     ];
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        course_id: idCourse,
+        course_id: course.id,
         title: '',
         order_index: indexAnterior + 1,
         // Define o valor inicial como o valor do primeiro item (0)
